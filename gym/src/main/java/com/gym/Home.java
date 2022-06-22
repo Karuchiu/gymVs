@@ -4,6 +4,7 @@ import java.awt.*;
 
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class Home extends JFrame{
@@ -16,13 +17,13 @@ public class Home extends JFrame{
     JPanel financialPanel =new JPanel();
     
      Home(){
-        setSize(1050, 780);
+        setSize(1100, 680);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         setResizable(false);
         setLocationRelativeTo(null);
 
-        heading.setBounds(0,0,1050,100);
+        heading.setBounds(0,0,1050,70);
        
         homeTitle.setFont(new Font("Ink Free", Font.ITALIC, 40));
         homeTitle.setBackground(Color.BLUE);
@@ -30,7 +31,7 @@ public class Home extends JFrame{
         heading.add(homeTitle);
 
         //Adding tabbed panes
-        tabbedPane.setBounds(0,100,1050,680);
+        tabbedPane.setBounds(0,100,1100,610);
         tabbedPane.addTab("Overview", overviewPanel);
         tabbedPane.addTab("Get Member Info", memberPanel);
         tabbedPane.addTab("Financial Details", financialPanel);
@@ -59,7 +60,7 @@ public class Home extends JFrame{
       JLabel dateLabel = new JLabel("Date");
       JLabel timeLabel = new JLabel("Time");
 
-      homeButton.setBounds(0, 0, 1050, 100);
+      homeButton.setBounds(0, 0, 1100, 100);
       homeButton.setBackground(new Color(173,216,230));;
       homeButton.setFont(new Font("Arial", Font.BOLD, 30));
       homeButton.setFocusable(false);
@@ -85,6 +86,55 @@ public class Home extends JFrame{
 
      private void memberPanelComps(){
 
+         TitledBorder title1, title2;
+         JPanel panel1 = new JPanel();
+         JPanel panel2 = new JPanel();
+         JPanel panel3 = new JPanel();
+         JPanel panel4 = new JPanel();
+         JPanel panel5 = new JPanel();
+         JButton button2 = new JButton("Update Member");
+         JButton button3 = new JButton("Delete Member");
+
+         panel1.setBounds(0,0,700,110);
+
+         JLabel label1 = new JLabel("Enter a valid ID to get related member information");
+         JLabel label2 = new JLabel("Membership ID: ");
+         JTextField txtField1 = new JTextField();
+         JButton button1 = new JButton("Search");
+        
+         panel1.add(label1);
+         panel1.add(label2);
+         panel1.add(txtField1);
+         panel1.add(button1);
+
+         panel2.setBounds(0,110,700,140);
+         panel2.setBorder(BorderFactory.createLineBorder(Color.black));
+
+         panel3.setBounds(710,0,370,250);
+         title1 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Basic Details");
+         title1.setTitleJustification(TitledBorder.LEFT);
+         panel3.setBorder(title1);
+
+         panel4.setBounds(340,250,350,265);
+         title2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Body Statistics");
+         title2.setTitleJustification(TitledBorder.LEFT);
+         panel4.setBorder(title2);
+
+         panel5.setBounds(710,250,370,265);
+         panel5.setBorder(BorderFactory.createLineBorder(Color.black));
+
+         button2.setBounds(100, 300, 150, 40);
+         button3.setBounds(100, 360, 150, 40);
+
+         memberPanel.setLayout(null);
+
+         memberPanel.add(panel1);
+         memberPanel.add(panel2);
+         memberPanel.add(panel3);
+         memberPanel.add(panel4);
+         memberPanel.add(panel5);
+         memberPanel.add(button2);
+         memberPanel.add(button3);
      }
      
 }
