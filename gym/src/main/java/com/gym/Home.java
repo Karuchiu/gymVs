@@ -95,33 +95,175 @@ public class Home extends JFrame{
          JButton button2 = new JButton("Update Member");
          JButton button3 = new JButton("Delete Member");
 
+         //PANEL 1
          panel1.setBounds(0,0,700,110);
+         panel1.setLayout(null);
 
          JLabel label1 = new JLabel("Enter a valid ID to get related member information");
          JLabel label2 = new JLabel("Membership ID: ");
          JTextField txtField1 = new JTextField();
          JButton button1 = new JButton("Search");
+
+         label1.setBounds(5,5,600,40);
+         label2.setBounds(15,60,100,30);
+         txtField1.setBounds(120,60,180,30);
+         button1.setBounds(350,60,100,30);
         
          panel1.add(label1);
          panel1.add(label2);
          panel1.add(txtField1);
          panel1.add(button1);
 
+         //PANEL 2
          panel2.setBounds(0,110,700,140);
          panel2.setBorder(BorderFactory.createLineBorder(Color.black));
+         panel2.setLayout(null);
 
+         JLabel label3 = new JLabel("In case of an emergency");
+         JLabel label4 = new JLabel("Emergency contact:");
+         JTextField txtField2 = new JTextField();
+
+         label3.setBounds(20,20,300,30);
+         label4.setBounds(100,70,150,40);
+         txtField2.setBounds(270,70,180,40);
+
+         panel2.add(label3);
+         panel2.add(label4);
+         panel2.add(txtField2);
+
+         //PANEL 3
          panel3.setBounds(710,0,370,250);
          title1 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Basic Details");
          title1.setTitleJustification(TitledBorder.LEFT);
          panel3.setBorder(title1);
+         panel3.setLayout(null);
 
+         JLabel label5 = new JLabel("Name:");
+         JLabel label6 = new JLabel("NIC:");
+         JLabel label7 = new JLabel("Contact number:");
+         JLabel label8 = new JLabel("Address:");
+         JLabel label9 = new JLabel("Email Address:");
+         JTextField txtField3 = new JTextField();
+         JTextField txtField4 = new JTextField();
+         JTextField txtField5 = new JTextField();
+         JTextField txtField6 = new JTextField();
+         JTextField txtField7 = new JTextField();
+
+         label5.setBounds(10,30,150,20);
+         txtField3.setBounds(165,30,150,20);
+         label6.setBounds(10,70,150,20);
+         txtField4.setBounds(165,70,150,20);
+         label7.setBounds(10,110,150,20);
+         txtField5.setBounds(165, 110,150,20);
+         label8.setBounds(10,150,150,20);
+         txtField6.setBounds(165,150,150,20);
+         label9.setBounds(10,190,150,20);
+         txtField7.setBounds(165,190,150,20);
+
+         panel3.add(label5);
+         panel3.add(label6);
+         panel3.add(label7);
+         panel3.add(label8);
+         panel3.add(label9);
+         panel3.add(txtField3);
+         panel3.add(txtField4);
+         panel3.add(txtField5);
+         panel3.add(txtField6);
+         panel3.add(txtField7);
+
+         //PANEL 4
          panel4.setBounds(340,250,350,265);
          title2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Body Statistics");
          title2.setTitleJustification(TitledBorder.LEFT);
          panel4.setBorder(title2);
+         panel4.setLayout(null);
 
+         JLabel jLabel1 = new JLabel("Gender:");
+         JLabel jlabel2 = new JLabel("Height:");
+         JLabel jlabel3 = new JLabel("Weight:");
+         JLabel jlabel4 = new JLabel("BMI:");
+         JLabel jlabel5 = new JLabel("Remarks:");
+         JTextField tField1 = new JTextField();
+         JTextField tField2 = new JTextField();
+         JTextField tField3 = new JTextField();
+         JTextField tField4 = new JTextField();
+         JTextArea txtArea1 = new JTextArea(5,40);
+
+         jLabel1.setBounds(10,30,150,20);
+         tField1.setBounds(165,30,150,20);
+         jlabel2.setBounds(10,70,150,20);
+         tField2.setBounds(165,70,150,20);
+         jlabel3.setBounds(10,110,150,20);
+         tField3.setBounds(165, 110,150,20);
+         jlabel4.setBounds(10,150,150,20);
+         tField4.setBounds(165,150,150,20);
+         jlabel5.setBounds(10,190,150,20);
+         txtArea1.setBounds(165,190,150,60);
+         txtArea1.setLineWrap(true);
+         txtArea1.setWrapStyleWord(true);
+
+         panel4.add(jLabel1);
+         panel4.add(jlabel2);
+         panel4.add(jlabel3);
+         panel4.add(jlabel4);
+         panel4.add(jlabel5);
+         panel4.add(tField1);
+         panel4.add(tField2);
+         panel4.add(tField3);
+         panel4.add(tField4);
+         panel4.add(txtArea1);
+
+         //PANEL 5
          panel5.setBounds(710,250,370,265);
          panel5.setBorder(BorderFactory.createLineBorder(Color.black));
+         panel5.setLayout(null);
+
+         JLabel labelField1 = new JLabel("Membership Category:");
+         JLabel labelField2 = new JLabel("Membership ID:");
+         JLabel labelField3 = new JLabel("Registered On:");
+         JLabel labelField4 = new JLabel("Registered By:");
+         JLabel labelField5 = new JLabel("Receipt No:");
+         JLabel labelField6 = new JLabel("Payment Plan:");
+         JLabel labelField7 = new JLabel("Last updated on:");
+         JTextField textField1 = new JTextField();
+         JTextField textField2 = new JTextField();
+         JTextField textField3 = new JTextField();
+         JTextField textField4 = new JTextField();
+         JTextField textField5 = new JTextField();
+         JTextField textField6 = new JTextField();
+         JTextField textField7 = new JTextField();
+
+         labelField1.setBounds(10,10,150,20);
+         textField1.setBounds(165,10,150,20);
+         labelField2.setBounds(10,45,150,20);
+         textField2.setBounds(165,45,150,20);
+         labelField3.setBounds(10,85,150,20);
+         textField3.setBounds(165,85,150,20);
+         labelField4.setBounds(10,125,150,20);
+         textField4.setBounds(165,125,150,20);
+         labelField5.setBounds(10,165,150,20);
+         textField5.setBounds(165,165,150,20);
+         labelField6.setBounds(10,205,150,20);
+         textField6.setBounds(165,205,150,20);
+         labelField7.setBounds(10,240,150,20);
+         textField7.setBounds(165,240,150,20);
+
+         panel5.add(labelField1);
+         panel5.add(textField1);
+         panel5.add(labelField2);
+         panel5.add(textField2);
+         panel5.add(labelField3);
+         panel5.add(textField3);
+         panel5.add(labelField4);
+         panel5.add(textField4);
+         panel5.add(labelField5);
+         panel5.add(textField5);
+         panel5.add(labelField6);
+         panel5.add(textField6);
+         panel5.add(labelField7);
+         panel5.add(textField7);
+         
+         //End of Panels!
 
          button2.setBounds(100, 300, 150, 40);
          button3.setBounds(100, 360, 150, 40);
