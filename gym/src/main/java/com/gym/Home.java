@@ -1,13 +1,15 @@
 package com.gym;
 
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class Home extends JFrame{
+
+public class Home extends JFrame implements ActionListener{
 
     JPanel heading = new JPanel();
     JLabel homeTitle = new JLabel("Gym Management App");
@@ -15,6 +17,7 @@ public class Home extends JFrame{
     JPanel overviewPanel =new JPanel();
     JPanel memberPanel =new JPanel();
     JPanel financialPanel =new JPanel();
+    JButton homeButton;
     
      Home(){
         setSize(1100, 680);
@@ -24,7 +27,7 @@ public class Home extends JFrame{
         setLocationRelativeTo(null);
 
         heading.setBounds(0,0,1050,70);
-       
+      
         homeTitle.setFont(new Font("Ink Free", Font.ITALIC, 40));
         homeTitle.setBackground(Color.BLUE);
 
@@ -46,8 +49,8 @@ public class Home extends JFrame{
         setVisible(true);
      }
 
-     private void overviewPanelComps(){
-      JButton homeButton = new JButton("Add New Member");
+      void overviewPanelComps(){
+      homeButton = new JButton("Add New Member");
       JLabel homLabel =new JLabel("At a glance...");
     
       //creating a table
@@ -65,6 +68,7 @@ public class Home extends JFrame{
       homeButton.setBackground(new Color(173,216,230));;
       homeButton.setFont(new Font("Arial", Font.BOLD, 30));
       homeButton.setFocusable(false);
+      homeButton.addActionListener(this);
 
       homLabel.setBounds(10, 110, 200, 30);
       homLabel.setFont(new Font("Arial", Font.ROMAN_BASELINE, 20));
@@ -338,4 +342,13 @@ public class Home extends JFrame{
         financialPanel.add(fPanel);
         financialPanel.add(fScrollPane);
      }
+
+   @Override
+   public void actionPerformed(ActionEvent e) {
+      if(e.getSource() == homeButton){
+         setVisible(false);
+         NewMember nm = new NewMember();
+         nm.setVisible(true);
+      }      
+   }
 }

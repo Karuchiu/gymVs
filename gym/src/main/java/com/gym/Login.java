@@ -27,7 +27,7 @@ public class Login extends JFrame implements ActionListener{
 
     Login(){
         inComponents();
-
+        
         conn = Connectivity.openConnection();
     }
 
@@ -73,7 +73,7 @@ public class Login extends JFrame implements ActionListener{
     JTextField userField = new JTextField();
     JPasswordField passwordField = new JPasswordField();
     JButton button = new JButton("LOG IN");
-    
+    Font myFont = new Font("Tahoma", Font.PLAIN, 20);
 
     private void inComponents(){
         setSize(900, 450);
@@ -97,17 +97,20 @@ public class Login extends JFrame implements ActionListener{
         panel2.add(button);
 
         label2.setBounds(75,10,300,160);
-        userLabel.setBounds(100,180,250,20);
-        userField.setBounds(100,205,250,20);
-        passLabel.setBounds(100,235,250,20);
-        passwordField.setBounds(100,260,250,20);
-        button.setBounds(100,300,250,30);
+        userLabel.setBounds(100,180,250,30);
+        userField.setBounds(100,211,250,30);
+        passLabel.setBounds(100,240,250,30);
+        passwordField.setBounds(100,271,250,30);
+        button.setBounds(175,308,100,30);
         button.addActionListener(this);
 
         button.setFocusable(false);
         button.setBackground(Color.BLUE);
         button.setForeground(Color.WHITE);
 
+        userLabel.setFont(myFont);
+        passLabel.setFont(myFont);
+        button.setFont(myFont);
 
         add(panel1);
         add(panel2);
