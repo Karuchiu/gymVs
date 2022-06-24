@@ -38,6 +38,7 @@ public class Home extends JFrame{
 
         overviewPanelComps();
         memberPanelComps();
+        financialPanelComps();
 
         add(heading);
         add(tabbedPane);
@@ -278,5 +279,63 @@ public class Home extends JFrame{
          memberPanel.add(button2);
          memberPanel.add(button3);
      }
-     
+
+     private void financialPanelComps(){
+        JLabel fLabel = new JLabel("Payment Details");
+        TitledBorder fBorder;
+        fLabel.setBounds(20,20,200,40);
+
+
+        JPanel fPanel = new JPanel();
+
+        fPanel.setBounds(20,100,400,400);
+        fBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Add Payment to the Database");
+        fBorder.setTitleJustification(TitledBorder.LEFT);
+        fPanel.setBorder(fBorder);
+        fPanel.setLayout(null);
+
+        JLabel flabel1 = new JLabel("Membership ID:");
+        JTextField fTextField = new JTextField();
+        JButton fButton = new JButton("Check name related to ID");
+        JLabel fLabel2 = new JLabel("Payment                    Kshs");
+        JTextField fTextField2 = new JTextField();
+        JLabel fLabel3 = new JLabel("/=");
+        JLabel fLabel4 = new JLabel("Receipt No:");
+        JTextField fTextField3 = new JTextField();
+        JButton fButton2 = new JButton("Submit");
+
+        String[] fColumns = {"ID", "Count", "Receipt No", "Payment", "Date", "Added By"};
+        int fNumrows = 0;
+        DefaultTableModel fTableModel = new DefaultTableModel(fNumrows, fColumns.length);
+        JTable finTable = new JTable(fTableModel);
+        JScrollPane fScrollPane = new JScrollPane(finTable);
+        finTable.setRowHeight(30);
+        fTableModel.setColumnIdentifiers(fColumns);
+
+        flabel1.setBounds(20,25,100,30);
+        fTextField.setBounds(150, 25,200,30);
+        fButton.setBounds(20,100,350,50);
+        fLabel2.setBounds(20,180,150,30);
+        fTextField2.setBounds(200,180,100,30);
+        fLabel3.setBounds(310,180,30,30);
+        fLabel4.setBounds(20,250,100,30);
+        fTextField3.setBounds(150,250,200,30);
+        fButton2.setBounds(20,320,350,50);
+        fScrollPane.setBounds(430,100,650,400);
+
+        fPanel.add(flabel1);
+        fPanel.add(fTextField);
+        fPanel.add(fButton);
+        fPanel.add(fLabel2);
+        fPanel.add(fTextField2);
+        fPanel.add(fLabel3);
+        fPanel.add(fLabel4);
+        fPanel.add(fTextField3);
+        fPanel.add(fButton2);
+
+        financialPanel.setLayout(null);
+        financialPanel.add(fLabel);
+        financialPanel.add(fPanel);
+        financialPanel.add(fScrollPane);
+     }
 }
