@@ -16,7 +16,7 @@ public class Connectivity {
         try {
             Class.forName(JDBC_DRIVER);
             Connection conn = (Connection) DriverManager.getConnection(
-                DB_URL, "karuchiu", "karuchiu");
+                DB_URL,USER,PASS );
              return conn;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);

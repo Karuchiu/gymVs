@@ -1,5 +1,6 @@
 package com.gym;
 
+import java.sql.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,16 +8,17 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class NewMember extends JFrame implements ActionListener{
-    JPanel nmPanel = new JPanel();
-    JLabel nmTitle = new JLabel("Add New Member");
-    JPanel nmPanel1 = new JPanel();
-    JPanel nmPanel2 = new JPanel();
-    JPanel nmPanel3 = new JPanel();
-    JButton nmButton1 = new JButton("Clear All Text Fields");
-    JButton nmButton2 = new JButton("Add to the Database");
-    JButton backButton = new JButton("Back");
+    Connection conn = null;
+    Statement stat = null;
+    ResultSet rSet = null;
 
     NewMember(){
+        nmComps();
+
+        conn = (Connection) Connectivity.openConnection();
+    }
+
+    public void nmComps(){
         setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
@@ -28,10 +30,12 @@ public class NewMember extends JFrame implements ActionListener{
         nmTitle.setBackground(Color.BLUE);
         nmPanel.add(nmTitle);
 
-        nmButton1.setBounds(100,410,180,30);
-        nmButton2.setBounds(100,450,180,30);
+        clearButton.setBounds(100,410,180,30);
+        dbButton.setBounds(100,450,180,30);
         backButton.setBounds(100,490,180,30);
         backButton.addActionListener(this);
+        dbButton.addActionListener(this);
+        clearButton.addActionListener(this);
 
         nmPanel1Comps();
         nmPanel2Comps();
@@ -41,11 +45,27 @@ public class NewMember extends JFrame implements ActionListener{
         add(nmPanel1);
         add(nmPanel2);
         add(nmPanel3);
-        add(nmButton1);
-        add(nmButton2);
+        add(clearButton);
+        add(dbButton);
         add(backButton);
         setVisible(true);
     }
+
+    JPanel nmPanel = new JPanel();
+    JLabel nmTitle = new JLabel("Add New Member");
+    JPanel nmPanel1 = new JPanel();
+    JPanel nmPanel2 = new JPanel();
+    JPanel nmPanel3 = new JPanel();
+    JButton clearButton = new JButton("Clear All Text Fields");
+    JButton dbButton = new JButton("Add to the Database");
+    JButton backButton = new JButton("Back");
+
+    JTextField idField, nameField, NICField, contactField, addressField, emailField, emecField, receiptField, heightField, weightField;
+    JComboBox<String> categoryBox, planBox;
+    ButtonGroup genderGroup;
+    JTextArea remarksArea;
+
+    JRadioButton male , female;
 
     private void nmPanel1Comps(){
         nmPanel1.setBounds(10,70,350,320);
@@ -53,19 +73,19 @@ public class NewMember extends JFrame implements ActionListener{
         nmPanel1.setLayout(null);
 
         JLabel idLabel = new JLabel("ID:");
-        JTextField idField = new JTextField();
+        idField = new JTextField();
         JLabel nameLabel = new JLabel("Name:");
-        JTextField nameField = new JTextField();
+        nameField = new JTextField();
         JLabel NICLabel = new JLabel("NIC:");
-        JTextField NICField = new JTextField();
+        NICField = new JTextField();
         JLabel contactLabel = new JLabel("Contact:");
-        JTextField contactField = new JTextField();
+        contactField = new JTextField();
         JLabel addressLabel = new JLabel("Address:");
-        JTextField addressField = new JTextField();
+        addressField = new JTextField();
         JLabel emailLabel = new JLabel("Email:");
-        JTextField emailField = new JTextField();
+        emailField = new JTextField();
         JLabel emecLabel = new JLabel("Emergency Contact:");
-        JTextField emecField = new JTextField();
+        emecField = new JTextField();
 
         idLabel.setBounds(10,20,150,30);
         idField.setBounds(160,20,150,30);
@@ -107,11 +127,11 @@ public class NewMember extends JFrame implements ActionListener{
         String [] paymentPlan = {"Select", "Weekly", "1 Month", "3 Months", "6 Months"};
 
         JLabel category = new JLabel("Membership Category:");
-        JComboBox<String> categoryBox = new JComboBox<String>(memberCategory);
+        categoryBox = new JComboBox<String>(memberCategory);
         JLabel receipt = new JLabel("Receipt No:");
-        JTextField receiptField = new JTextField();
-        JLabel plan = new JLabel("Membership Category:");
-        JComboBox <String> planBox = new JComboBox<String>(paymentPlan);
+        receiptField = new JTextField();
+        JLabel plan = new JLabel("Payment Plan:");
+        planBox = new JComboBox<String>(paymentPlan);
 
         category.setBounds(15,20,150,30);
         categoryBox.setBounds(170,20,200,30);
@@ -137,17 +157,17 @@ public class NewMember extends JFrame implements ActionListener{
         nmPanel3.setLayout(null);
 
         JLabel gender = new JLabel("Gender:");
-        JRadioButton male = new JRadioButton("Male");
-        JRadioButton female = new JRadioButton("Female");
-        ButtonGroup genderGroup = new ButtonGroup();
+        male = new JRadioButton("Male");
+        female = new JRadioButton("Female");
+        genderGroup = new ButtonGroup();
         JLabel height = new JLabel("Height:");
-        JTextField heightField = new JTextField();
+        heightField = new JTextField();
         JLabel m = new JLabel("m");
         JLabel weight = new JLabel("Weight:");
-        JTextField weightField = new JTextField();
+        weightField = new JTextField();
         JLabel kg = new JLabel("kg");
         JLabel remarks = new JLabel("Remarks:");
-        JTextArea remarksArea = new JTextArea();
+        remarksArea = new JTextArea();
         remarksArea.setLineWrap(true);
         remarksArea.setWrapStyleWord(true);
 
@@ -185,6 +205,63 @@ public class NewMember extends JFrame implements ActionListener{
            setVisible(false);
            Home home = new Home();
            home.setVisible(true); 
+        }
+        
+        if (e.getSource() == clearButton) {
+            idField.setText("");
+            nameField.setText("");
+            NICField.setText("");
+            contactField.setText("");
+            addressField.setText("");
+            emailField.setText("");
+            emecField.setText("");
+            categoryBox.setSelectedIndex(0);
+            receiptField.setText("");
+            planBox.setSelectedIndex(0);
+            genderGroup.clearSelection();
+            heightField.setText("");
+            weightField.setText("");
+            remarksArea.setText(" ");
+        }
+
+        if(e.getSource() == dbButton){
+            try{
+                int id = Integer.valueOf(idField.getText());
+                String name = nameField.getText();
+                String nic = NICField.getText();
+                int contact = Integer.valueOf(contactField.getText());
+                String address = addressField.getText();
+                String email = emailField.getText();
+                int emergencyc = Integer.valueOf(emecField.getText());
+                String memcategory =  (String) categoryBox.getSelectedItem();
+                String receiptno = receiptField.getText();
+                String payplan = (String) planBox.getSelectedItem();
+                String gender = genderGroup.getSelection().getActionCommand();
+                //male.setActionCommand("Male");
+                //female.setActionCommand("Female");
+
+                if(male.isSelected()){
+                    gender = "Male";
+                } else if(female.isSelected()){
+                    gender = "Female";
+                }
+
+                String height = heightField.getText();
+                String weight = weightField.getText();
+                String remarks = remarksArea.getText();
+
+                stat = conn.createStatement();
+                String sql = "insert into addmember Values('"+id+"', '"+name+"', '"+nic+"','"+contact+"','"+address+"','"+email+"','"+emergencyc+"','"+memcategory+"', '"+receiptno+"','"+payplan+"', '"+gender+"', '"+height+"', '"+weight+"', '"+remarks+"')";
+                rSet = stat.executeQuery(sql);
+                JOptionPane.showMessageDialog(null, "Data added successfully");
+
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                }
+
+                
+                
         }
         
     }
