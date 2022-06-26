@@ -252,7 +252,7 @@ public class NewMember extends JFrame implements ActionListener{
 
                 stat = conn.createStatement();
                 String sql = "insert into addmember Values('"+id+"', '"+name+"', '"+nic+"','"+contact+"','"+address+"','"+email+"','"+emergencyc+"','"+memcategory+"', '"+receiptno+"','"+payplan+"', '"+gender+"', '"+height+"', '"+weight+"', '"+remarks+"')";
-                rSet = stat.executeQuery(sql);
+                stat.executeUpdate(sql); // executeUpdate?
                 JOptionPane.showMessageDialog(null, "Data added successfully");
 
                 }
