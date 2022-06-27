@@ -10,7 +10,7 @@ import javax.swing.*;
 public class NewMember extends JFrame implements ActionListener{
     Connection conn = null;
     Statement stat = null;
-    ResultSet rSet = null;
+   // ResultSet rSet = null;
 
     NewMember(){
         nmComps();

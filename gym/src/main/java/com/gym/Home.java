@@ -8,8 +8,16 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.mysql.cj.protocol.Resultset;
+
+import java.sql.*;
+
 
 public class Home extends JFrame implements ActionListener{
+
+    Connection conn;
+    Statement statement = null;
+    Resultset rset;
 
     JPanel heading = new JPanel();
     JLabel homeTitle = new JLabel("Gym Management App");
@@ -17,7 +25,9 @@ public class Home extends JFrame implements ActionListener{
     JPanel overviewPanel =new JPanel();
     JPanel memberPanel =new JPanel();
     JPanel financialPanel =new JPanel();
-    JButton homeButton;
+    JButton homeButton, searchId;
+    JTextField searchIdField, memEmerg, memName, memNic, memContact, memAddress, memEmail, memGender, memHeight, memWeight, memBmi, memCategory, memId, regOn, regBy, memReceipt, memPayplan, memUpdate;
+    JTextArea memRemarks;
     
      Home(){
         setSize(1100, 680);
@@ -45,6 +55,8 @@ public class Home extends JFrame implements ActionListener{
 
         add(heading);
         add(tabbedPane);
+
+        conn = Connectivity.openConnection();
 
         setVisible(true);
      }
@@ -106,18 +118,18 @@ public class Home extends JFrame implements ActionListener{
 
          JLabel label1 = new JLabel("Enter a valid ID to get related member information");
          JLabel label2 = new JLabel("Membership ID: ");
-         JTextField txtField1 = new JTextField();
-         JButton button1 = new JButton("Search");
+         searchIdField = new JTextField();
+         searchId = new JButton("Search");
 
          label1.setBounds(5,5,600,40);
          label2.setBounds(15,60,100,30);
-         txtField1.setBounds(120,60,180,30);
-         button1.setBounds(350,60,100,30);
+         searchIdField.setBounds(120,60,180,30);
+         searchId.setBounds(350,60,100,30);
         
          panel1.add(label1);
          panel1.add(label2);
-         panel1.add(txtField1);
-         panel1.add(button1);
+         panel1.add(searchIdField);
+         panel1.add(searchId);
 
          //PANEL 2
          panel2.setBounds(0,110,700,140);
@@ -126,15 +138,15 @@ public class Home extends JFrame implements ActionListener{
 
          JLabel label3 = new JLabel("In case of an emergency");
          JLabel label4 = new JLabel("Emergency contact:");
-         JTextField txtField2 = new JTextField();
+         memEmerg = new JTextField();
 
          label3.setBounds(20,20,300,30);
          label4.setBounds(100,70,150,40);
-         txtField2.setBounds(270,70,180,40);
+         memEmerg.setBounds(270,70,180,40);
 
          panel2.add(label3);
          panel2.add(label4);
-         panel2.add(txtField2);
+         panel2.add(memEmerg);
 
          //PANEL 3
          panel3.setBounds(710,0,370,250);
@@ -148,33 +160,33 @@ public class Home extends JFrame implements ActionListener{
          JLabel label7 = new JLabel("Contact number:");
          JLabel label8 = new JLabel("Address:");
          JLabel label9 = new JLabel("Email Address:");
-         JTextField txtField3 = new JTextField();
-         JTextField txtField4 = new JTextField();
-         JTextField txtField5 = new JTextField();
-         JTextField txtField6 = new JTextField();
-         JTextField txtField7 = new JTextField();
+         memName = new JTextField();
+         memNic = new JTextField();
+         memContact = new JTextField();
+         memAddress = new JTextField();
+         memEmail = new JTextField();
 
          label5.setBounds(10,30,150,20);
-         txtField3.setBounds(165,30,150,20);
+         memName.setBounds(165,30,150,20);
          label6.setBounds(10,70,150,20);
-         txtField4.setBounds(165,70,150,20);
+         memNic.setBounds(165,70,150,20);
          label7.setBounds(10,110,150,20);
-         txtField5.setBounds(165, 110,150,20);
+         memContact.setBounds(165, 110,150,20);
          label8.setBounds(10,150,150,20);
-         txtField6.setBounds(165,150,150,20);
+         memAddress.setBounds(165,150,150,20);
          label9.setBounds(10,190,150,20);
-         txtField7.setBounds(165,190,150,20);
+         memEmail.setBounds(165,190,150,20);
 
          panel3.add(label5);
          panel3.add(label6);
          panel3.add(label7);
          panel3.add(label8);
          panel3.add(label9);
-         panel3.add(txtField3);
-         panel3.add(txtField4);
-         panel3.add(txtField5);
-         panel3.add(txtField6);
-         panel3.add(txtField7);
+         panel3.add(memName);
+         panel3.add(memNic);
+         panel3.add(memContact);
+         panel3.add(memAddress);
+         panel3.add(memEmail);
 
          //PANEL 4
          panel4.setBounds(340,250,350,265);
@@ -188,35 +200,35 @@ public class Home extends JFrame implements ActionListener{
          JLabel jlabel3 = new JLabel("Weight:");
          JLabel jlabel4 = new JLabel("BMI:");
          JLabel jlabel5 = new JLabel("Remarks:");
-         JTextField tField1 = new JTextField();
-         JTextField tField2 = new JTextField();
-         JTextField tField3 = new JTextField();
-         JTextField tField4 = new JTextField();
-         JTextArea txtArea1 = new JTextArea(5,40);
+         memGender = new JTextField();
+         memHeight = new JTextField();
+         memWeight = new JTextField();
+         memBmi = new JTextField();
+         memRemarks = new JTextArea(5,40);
 
          jLabel1.setBounds(10,30,150,20);
-         tField1.setBounds(165,30,150,20);
+         memGender.setBounds(165,30,150,20);
          jlabel2.setBounds(10,70,150,20);
-         tField2.setBounds(165,70,150,20);
+         memHeight.setBounds(165,70,150,20);
          jlabel3.setBounds(10,110,150,20);
-         tField3.setBounds(165, 110,150,20);
+         memWeight.setBounds(165, 110,150,20);
          jlabel4.setBounds(10,150,150,20);
-         tField4.setBounds(165,150,150,20);
+         memBmi.setBounds(165,150,150,20);
          jlabel5.setBounds(10,190,150,20);
-         txtArea1.setBounds(165,190,150,60);
-         txtArea1.setLineWrap(true);
-         txtArea1.setWrapStyleWord(true);
+         memRemarks.setBounds(165,190,150,60);
+         memRemarks.setLineWrap(true);
+         memRemarks.setWrapStyleWord(true);
 
          panel4.add(jLabel1);
          panel4.add(jlabel2);
          panel4.add(jlabel3);
          panel4.add(jlabel4);
          panel4.add(jlabel5);
-         panel4.add(tField1);
-         panel4.add(tField2);
-         panel4.add(tField3);
-         panel4.add(tField4);
-         panel4.add(txtArea1);
+         panel4.add(memGender);
+         panel4.add(memHeight);
+         panel4.add(memWeight);
+         panel4.add(memBmi);
+         panel4.add(memRemarks);
 
          //PANEL 5
          panel5.setBounds(710,250,370,265);
@@ -230,43 +242,43 @@ public class Home extends JFrame implements ActionListener{
          JLabel labelField5 = new JLabel("Receipt No:");
          JLabel labelField6 = new JLabel("Payment Plan:");
          JLabel labelField7 = new JLabel("Last updated on:");
-         JTextField textField1 = new JTextField();
-         JTextField textField2 = new JTextField();
-         JTextField textField3 = new JTextField();
-         JTextField textField4 = new JTextField();
-         JTextField textField5 = new JTextField();
-         JTextField textField6 = new JTextField();
-         JTextField textField7 = new JTextField();
+         memCategory = new JTextField();
+         memId = new JTextField();
+         regOn = new JTextField();
+         regBy = new JTextField();
+         memReceipt = new JTextField();
+         memPayplan = new JTextField();
+         memUpdate = new JTextField();
 
          labelField1.setBounds(10,10,150,20);
-         textField1.setBounds(165,10,150,20);
+         memCategory.setBounds(165,10,150,20);
          labelField2.setBounds(10,45,150,20);
-         textField2.setBounds(165,45,150,20);
+         memId.setBounds(165,45,150,20);
          labelField3.setBounds(10,85,150,20);
-         textField3.setBounds(165,85,150,20);
+         regOn.setBounds(165,85,150,20);
          labelField4.setBounds(10,125,150,20);
-         textField4.setBounds(165,125,150,20);
+         regBy.setBounds(165,125,150,20);
          labelField5.setBounds(10,165,150,20);
-         textField5.setBounds(165,165,150,20);
+         memReceipt.setBounds(165,165,150,20);
          labelField6.setBounds(10,205,150,20);
-         textField6.setBounds(165,205,150,20);
+         memPayplan.setBounds(165,205,150,20);
          labelField7.setBounds(10,240,150,20);
-         textField7.setBounds(165,240,150,20);
+         memUpdate.setBounds(165,240,150,20);
 
          panel5.add(labelField1);
-         panel5.add(textField1);
+         panel5.add(memCategory);
          panel5.add(labelField2);
-         panel5.add(textField2);
+         panel5.add(memId);
          panel5.add(labelField3);
-         panel5.add(textField3);
+         panel5.add(regOn);
          panel5.add(labelField4);
-         panel5.add(textField4);
+         panel5.add(regBy);
          panel5.add(labelField5);
-         panel5.add(textField5);
+         panel5.add(memReceipt);
          panel5.add(labelField6);
-         panel5.add(textField6);
+         panel5.add(memPayplan);
          panel5.add(labelField7);
-         panel5.add(textField7);
+         panel5.add(memUpdate);
          
          //End of Panels!
 
@@ -302,10 +314,10 @@ public class Home extends JFrame implements ActionListener{
         JTextField fTextField = new JTextField();
         JButton fButton = new JButton("Check name related to ID");
         JLabel fLabel2 = new JLabel("Payment                    Kshs");
-        JTextField fTextField2 = new JTextField();
+        JTextField fmemId = new JTextField();
         JLabel fLabel3 = new JLabel("/=");
         JLabel fLabel4 = new JLabel("Receipt No:");
-        JTextField fTextField3 = new JTextField();
+        JTextField fTexmemWeight = new JTextField();
         JButton fButton2 = new JButton("Submit");
 
         String[] fColumns = {"ID", "Count", "Receipt No", "Payment", "Date", "Added By"};
@@ -320,10 +332,10 @@ public class Home extends JFrame implements ActionListener{
         fTextField.setBounds(150, 25,200,30);
         fButton.setBounds(20,100,350,50);
         fLabel2.setBounds(20,180,150,30);
-        fTextField2.setBounds(200,180,100,30);
+        fmemId.setBounds(200,180,100,30);
         fLabel3.setBounds(310,180,30,30);
         fLabel4.setBounds(20,250,100,30);
-        fTextField3.setBounds(150,250,200,30);
+        fTexmemWeight.setBounds(150,250,200,30);
         fButton2.setBounds(20,320,350,50);
         fScrollPane.setBounds(430,100,650,400);
 
@@ -331,10 +343,10 @@ public class Home extends JFrame implements ActionListener{
         fPanel.add(fTextField);
         fPanel.add(fButton);
         fPanel.add(fLabel2);
-        fPanel.add(fTextField2);
+        fPanel.add(fmemId);
         fPanel.add(fLabel3);
         fPanel.add(fLabel4);
-        fPanel.add(fTextField3);
+        fPanel.add(fTexmemWeight);
         fPanel.add(fButton2);
 
         financialPanel.setLayout(null);
@@ -350,5 +362,15 @@ public class Home extends JFrame implements ActionListener{
          NewMember nm = new NewMember();
          nm.setVisible(true);
       }      
+
+      if(e.getSource() == searchId){
+         try {
+            statement = conn.createStatement();
+            String memberId = searchIdField.getText();
+            String sql = "select * from addmember where Id = '"+memberId+"'";
+         } catch (Exception exc) {
+            //TODO: handle exception
+         }
+      }
    }
 }
