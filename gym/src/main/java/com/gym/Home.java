@@ -8,16 +8,14 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.mysql.cj.protocol.Resultset;
-
 import java.sql.*;
 
 
 public class Home extends JFrame implements ActionListener{
 
-    Connection conn;
+    Connection conn = null;
     Statement statement = null;
-    Resultset rset;
+    ResultSet rset = null;
 
     JPanel heading = new JPanel();
     JLabel homeTitle = new JLabel("Gym Management App");
@@ -125,6 +123,8 @@ public class Home extends JFrame implements ActionListener{
          label2.setBounds(15,60,100,30);
          searchIdField.setBounds(120,60,180,30);
          searchId.setBounds(350,60,100,30);
+         searchId.addActionListener(this);
+         searchId.setFocusable(false);
         
          panel1.add(label1);
          panel1.add(label2);
@@ -368,8 +368,27 @@ public class Home extends JFrame implements ActionListener{
             statement = conn.createStatement();
             String memberId = searchIdField.getText();
             String sql = "select * from addmember where Id = '"+memberId+"'";
+            rset = statement.executeQuery(sql);
+
+            if(rset.next()){
+               memEmerg.setText(rset.getString("Emergencyc"));
+               memName.setText(rset.getString("Name"));
+               memNic.setText(rset.getString("NIC"));
+               memContact.setText(rset.getString("Contact"));
+               memAddress.setText(rset.getString("Address"));
+               memEmail.setText(rset.getString("Email"));
+               memGender.setText(rset.getString("Gender"));
+               memHeight.setText(rset.getString("Height"));
+               memWeight.setText(rset.getString("Weight"));
+               memRemarks.setText(rset.getString("Remarks"));
+               memCategory.setText(rset.getString("memCategory"));
+               memId.setText(rset.getString("Id"));
+               memReceipt.setText(rset.getString("receiptNumber"));
+               memPayplan.setText(rset.getString("paymentPlan"));
+            }
+
          } catch (Exception exc) {
-            //TODO: handle exception
+               exc.printStackTrace();
          }
       }
    }
