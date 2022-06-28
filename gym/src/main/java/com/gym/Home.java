@@ -23,7 +23,7 @@ public class Home extends JFrame implements ActionListener{
     JPanel overviewPanel =new JPanel();
     JPanel memberPanel =new JPanel();
     JPanel financialPanel =new JPanel();
-    JButton homeButton, searchId;
+    JButton homeButton, searchId, deleteBtn ;
     JTextField searchIdField, memEmerg, memName, memNic, memContact, memAddress, memEmail, memGender, memHeight, memWeight, memBmi, memCategory, memId, regOn, regBy, memReceipt, memPayplan, memUpdate;
     JTextArea memRemarks;
     
@@ -108,7 +108,7 @@ public class Home extends JFrame implements ActionListener{
          JPanel panel4 = new JPanel();
          JPanel panel5 = new JPanel();
          JButton button2 = new JButton("Update Member");
-         JButton button3 = new JButton("Delete Member");
+         deleteBtn = new JButton("Delete Member");
 
          //PANEL 1
          panel1.setBounds(0,0,700,110);
@@ -283,7 +283,8 @@ public class Home extends JFrame implements ActionListener{
          //End of Panels!
 
          button2.setBounds(100, 300, 150, 40);
-         button3.setBounds(100, 360, 150, 40);
+         deleteBtn.setBounds(100, 360, 150, 40);
+         deleteBtn.addActionListener(this);
 
          memberPanel.setLayout(null);
 
@@ -293,7 +294,7 @@ public class Home extends JFrame implements ActionListener{
          memberPanel.add(panel4);
          memberPanel.add(panel5);
          memberPanel.add(button2);
-         memberPanel.add(button3);
+         memberPanel.add(deleteBtn);
      }
 
      private void financialPanelComps(){
@@ -357,6 +358,9 @@ public class Home extends JFrame implements ActionListener{
 
    @Override
    public void actionPerformed(ActionEvent e) {
+      String memberId = searchIdField.getText();
+      String sql; 
+
       if(e.getSource() == homeButton){
          setVisible(false);
          NewMember nm = new NewMember();
@@ -366,8 +370,7 @@ public class Home extends JFrame implements ActionListener{
       if(e.getSource() == searchId){
          try {
             statement = conn.createStatement();
-            String memberId = searchIdField.getText();
-            String sql = "select * from addmember where Id = '"+memberId+"'";
+            sql = "select * from addmember where Id = '"+memberId+"'";
             rset = statement.executeQuery(sql);
 
             if(rset.next()){
@@ -391,5 +394,36 @@ public class Home extends JFrame implements ActionListener{
                exc.printStackTrace();
          }
       }
+
+      if(e.getSource() == deleteBtn){
+         try {
+            statement = conn.createStatement();
+            int id = Integer.parseInt(searchIdField.getText());
+            sql = "delete from addmember where Id = '"+id+"'";
+            int YesOrNo = JOptionPane.showConfirmDialog(null, "Are you sure to delete member?", "Delete Data", JOptionPane.YES_NO_OPTION);
+
+            statement.executeUpdate(sql);
+
+            if(YesOrNo == 0){
+               memEmerg.setText("");
+               memName.setText("");
+               memNic.setText("");
+               memContact.setText("");
+               memAddress.setText("");
+               memEmail.setText("");
+               memGender.setText("");
+               memHeight.setText("");
+               memWeight.setText("");
+               memRemarks.setText("");
+               memCategory.setText("");
+               memId.setText("");
+               memReceipt.setText("");
+               memPayplan.setText("");
+            }
+         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+         }
+      }
+
    }
 }
